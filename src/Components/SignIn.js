@@ -72,14 +72,15 @@ export default class SignIn extends Component {
           </ModalFooter>
         </Modal>
       </div>
-      <div>
-        <Button
-          className='btn btn-lg btn-primary mb-3 mb-md-0 mr-md-3 airdrop'
-          onClick={this.doSignOut}
-        >
-          Sign Out
-        </Button>
-      </div>
+        {signIn && <div>
+          <Button
+            className='btn btn-lg btn-primary mb-3 mb-md-0 mr-md-3 airdrop'
+            onClick={this.doSignOut}
+          >
+            Sign Out
+          </Button>
+        </div>
+        }
     </div>
 
     )
