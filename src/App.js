@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import {auth} from './firebase';
 import SignUp from './Components/SignUp';
 import SignIn from './Components/SignIn';
-import {ListGroupItem, ListGroup, Button} from 'reactstrap'
+import {ListGroupItem, ListGroup} from 'reactstrap'
 
 class App extends Component {
   render() {
