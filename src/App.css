@@ -9,7 +9,7 @@ body {
 }
 header {
   position: relative;
-  top: 5%;
+  top: 6em;
   margin-bottom: 5%;
   width: 100%;
   text-align: center;
@@ -100,7 +100,7 @@ canvas {
 
 .auth {
   display: flex;
-  position: fixed;
+  position: absolute;
   right: 1%;
-  top: 1%;
+  top: 2px;
 }

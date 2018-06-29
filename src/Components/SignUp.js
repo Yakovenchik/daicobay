@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {auth} from '../firebase';
-import {Button, Modal, Input, InputGroup, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
+import {Button, Modal, Alert, Input, InputGroup, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 
 const INITIAL_STATE = {
   email: '',
   password: '',
-  signIn: false
+  signIn: false,
+  error: null
 };
 
 
@@ -39,11 +40,15 @@ export default class SignUp extends Component{
       .then(authUser => {
         this.setState(() => ({ ...INITIAL_STATE }));
         this.toggle();
+      })
+      .catch(error => {
+        this.setState({'error': error.message});
       });
     event.preventDefault();
   };
 
   render() {
+    const {error} = this.state;
     return(
       <div>
         <Button className="btn btn-lg btn-primary mb-3 mb-md-0 mr-md-3 airdrop" onClick={this.toggle} > Register for airdrop</Button>
@@ -52,7 +57,8 @@ export default class SignUp extends Component{
           <ModalBody>
             <InputGroup>
               <Input onChange={event => this.setState(byPropKey('email', event.target.value))} placeholder='Email'/>
-              <Input onChange={event => this.setState(byPropKey('password', event.target.value))} placeholder='Password'/>
+              <Input type='password' onChange={event => this.setState(byPropKey('password', event.target.value))} placeholder='Password'/>
+              {error && <Alert color='danger'>{error}</Alert>}
             </InputGroup>
           </ModalBody>
           <ModalFooter>

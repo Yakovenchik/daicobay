@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {auth} from '../firebase';
-import {Button, Modal, Input, InputGroup, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
+import {Button, Alert, Modal, Input, InputGroup, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 
 const INITIAL_STATE = {
   email: '',
   password: '',
-  signIn: false
+  signIn: false,
+  error: null
 };
 
 export default class SignIn extends Component {
@@ -43,26 +44,29 @@ export default class SignIn extends Component {
       .then(() => {
         this.setState({...INITIAL_STATE, 'signIn': true, 'currentEmail': this.state.email});
         this.toggle();
-      });
-
+      })
+      .catch(error => {
+        this.setState({'error': error.message});
+    });
     event.preventDefault();
   };
 
   render() {
-    const {signIn, currentEmail} = this.state;
+    const {signIn, currentEmail, error} = this.state;
     return (
       <div className='auth'>
       <div>
         {!signIn ? <Button className="btn btn-lg btn-primary mb-3 mb-md-0 mr-md-3 airdrop"
-                onClick={this.toggle}> SignIn</Button> : <div className="btn btn-lg btn-primary mb-3 mb-md-0 mr-md-3 airdrop">{currentEmail}</div>}
+                onClick={this.toggle}> SignIn</Button> : <div className="btn btn-lg mb-3 mb-md-0 mr-md-3 airdrop">{currentEmail}</div>}
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Sign In</ModalHeader>
           <ModalBody>
             <InputGroup>
               <Input onChange={event => this.setState({'email': event.target.value})}
                      placeholder='Email'/>
-              <Input onChange={event => this.setState({'password': event.target.value})}
+              <Input type='password' onChange={event => this.setState({'password': event.target.value})}
                      placeholder='Password'/>
+              {error && <Alert color='danger'>{error}</Alert>}
             </InputGroup>
           </ModalBody>
           <ModalFooter>
